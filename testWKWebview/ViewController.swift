@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         let url = URL(string: "http://www.google.co.jp")!
         let request = URLRequest(url: url)
         webView.load(request)
+        webView.customUserAgent = "Chrome/Firefox"//"iPad" iPhone //限定网页显示模式
         view.addSubview(webView)
         
         //native发送html代码给webView执行,取得数据打印(数据是全网也html)
