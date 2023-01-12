@@ -24,7 +24,8 @@ class ViewController: UIViewController {
         
         //native发送html代码给webView执行,取得数据打印(数据是全网也html)
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            //这里有个小坑,要用self.webView不能用webView因为viewDidLoad函数执行完了实例消失,闭包里面是弱引用,所以webView会消失,事先传到到外界的webView因为class级别的引用还在所以没事
+            //这里有个小坑,要用self.webView不能用webView因为viewDidLoad()函数执行完了实例消失,闭包里面是弱引用,所以webView会消失,事先传到到外界的webView因为class级别的引用还在所以没事
+            //DispatchQueue在专用线程上不会消失
             self.webView.evaluateJavaScript("document.body.innerHTML") { result , error in
                 guard let html = result as? String, error == nil else { return }
                 print(html)
