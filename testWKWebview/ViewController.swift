@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         webConfig.userContentController = userController
         webView = WKWebView(frame:  UIScreen.main.bounds, configuration: webConfig)
 
-        let url = URL(string: "http://localhost:9999/web.html")!
+        let url = URL(string: "http://localhost:9999/web1.html")!
         let request = URLRequest(url: url)
         webView.load(request)
         webView.customUserAgent = "iPhone" //"Chrome/Firefox"//"iPad" iPhone //限定网页显示模式
@@ -43,8 +43,9 @@ class ViewController: UIViewController {
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if message.name == "hoge" {
-                let number = message.body as! String
+                let str = message.body as! String
                 // do something
+                print("$$$$$$$$$$$", str)
             }
         }
 }

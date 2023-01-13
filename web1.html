@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                    <title>Simple HTML page</title>
+                    <script>
+    
+    function changeEcho(newText){//native>js发送指示修改文字
+        var echoElement = document.getElementById("echo1");
+        echoElement.innerText = newText; 
+    }
+
+    function sendToNative(message){
+        var native = window.webkit.messageHandlers.hoge
+        native.postMessage(message)
+    }
+
+    function sendMessage(){//js>native发送输入的string
+        var element = document.getElementById("ping");
+        console.log(element.value);
+        sendToNative(element.value);
+        element.value = "";
+    }
+
+    </script>
+                </head>
+                <body>
+                    <div class="container">
+                        <h2>Simple HTML Interaction </h2>
+                        <p>Hello this is a simple Javascript based page. Values entered in text box will be reflected</p>
+                        <p id="echo1">Echoed here.</p>
+                        <hr/>
+                        <h3> Native</h3>
+                        <p>Value entered here will be sent back to phone</p>
+                        <input id="ping" placeholder="Enter to send" class="input"/>
+                        <button class="button" onclick = "sendMessage()" >Send</button>
+                    </div>
+                </body>
+            </html>
