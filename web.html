@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
-<script type="text/javascript">
-    function echo(str) {
-        console.log(str);
-        window.webkit.messageHandlers.hoge.postMessage(str);
-}
-</script>
-<body>
-<input type="button" onClick="echo('toast clicked')" value="toast">
-<input type="button" onClick="echo('alert clicked')" value="Alert">
-</body>
-
+   <script type="text/javascript">
+      function echo(str) {
+          console.log(str);
+          window.webkit.messageHandlers.hoge.postMessage(str);
+      }
+   </script>
+   <body>
+      <input type="button" onClick="echo('toast clicked')" value="toast">
+      <input type="button" onClick="echo('alert clicked')" value="Alert">
+   </body>
 </html>
