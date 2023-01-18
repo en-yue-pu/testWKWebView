@@ -5,20 +5,20 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no"/>
    </head>
    <body>
-      iOS传过来的值：<span id="name1"></span>
+      iOS native传过来的值：<span id="name1"></span>
       <br>
-      <button onclick="responseSwift()">响应iOS</button>
+      <button onclick="responseSwift()">webview call native</button>
       <script type="text/javascript">
-         // 给Swift调用
+         // 给native Swift调用
          function sayHello(name) {
              document.getElementById("name1").innerHTML = name
-             return "Swift你好！"
+             return "native 调用 webView函数"
          }
-         
-         // 调用Swift方法
+
+         // 调用native Swift方法
          function responseSwift() {
              // 这里的callbackHandler是创建WKWebViewConfiguration时定义的
-             window.webkit.messageHandlers.hoge.postMessage("webView发送消息给native")
+             window.webkit.messageHandlers.hoge.postMessage("webView调用 native")
          }
       </script>
    </body>
