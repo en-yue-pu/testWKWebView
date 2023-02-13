@@ -11,60 +11,67 @@ import WebKit
 class ViewController: UIViewController {
     
     var webView: WKWebView!
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
         let webConfig: WKWebViewConfiguration = WKWebViewConfiguration()
         let userController: WKUserContentController = WKUserContentController()
         userController.add(self, name: "hoge")
         webConfig.userContentController = userController
         webView = WKWebView(frame:  UIScreen.main.bounds, configuration: webConfig)
-
-        let url = URL(string: "http://localhost:9999/web2.html")!
+        let url = URL(string: "http://169.254.46.230:9999/web5.html")!//这个ip是当前我mac的本地ip
         let request = URLRequest(url: url)
         webView.load(request)
+
         webView.customUserAgent = "iPhone" //"Chrome/Firefox"//"iPad" iPhone //限定网页显示模式
-        
         webView.navigationDelegate = self
-        
         view.addSubview(webView)
                 
-        //native发送html代码给webView执行,取得数据打印(数据是全网也html)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        //5秒后 native发送html代码给webView执行,执行结果能取得所有html数据   取得数据打印
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
 //            self.webView.evaluateJavaScript("document.body.innerHTML") { result , error in
+//                guard let self = self else { return }
 //                guard let html = result as? String, error == nil else { return }
 //                print(html)
+//                let newURL = URL(string: "http://localhost:9999/")!
+//                let newRequest = URLRequest(url: newURL)
+//                self.webView.load(newRequest)
+//                self.webView.reload()
+//                print("yue webView.stopLoading()执行前", self.webView.isLoading)
+//                self.webView.stopLoading()
+//                print("yue webView.stopLoading()执行后", self.webView.isLoading)
 //            }
-//        }
+        }
     }
 }
 
 extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        /* 载入结束就
-        native调用webview 里面的sayHello()函数,参数是一个string(native发送给webView)
-         */
-        webView.evaluateJavaScript("sayHello('native发送给webView')") { (result, err) in
-            print("native > webview の　callback:", result, err)
+        print("yue webView加载完成", self.webView.isLoading)
+
+        //native 调用webview中间sayHello函数(无参数)
+        webView.evaluateJavaScript("sayHello()") { (result, err) in
+            //接收到webview中间sayHello函数的return值 (格式是any 有可能error)
+            print("native收到webview中sayHello函数的返回值:", result, err)
+            self.showToast(message: result as! String)
+        }
+        
+        //native 调用webview中间sayHello函数(包含参数)
+        webView.evaluateJavaScript("sayHello2('AAAAAAAAAAAAA')") { (result, err) in
+            print("native收到webview中sayHello2函数的返回值:", result, err)
+            self.showToast(message: result as! String)
         }
     }
-    
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge) {
-        print("######")
-    }
+
 }
 
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        //接收webView发送的数据message.body
+        //看门狗用于接收webView发送的数据message.body
             if message.name == "hoge" {
                 let str = message.body as! String
                 // do something
-                print("webView > native:", str)
+                print("native收到webView主动发送的数据", str)
                 self.showToast(message: str)
             }
         }

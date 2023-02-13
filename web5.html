@@ -9,16 +9,23 @@
       <br>
       <button onclick="responseSwift()">webview call native</button>
       <script type="text/javascript">
-         // 给native Swift调用
-         function sayHello(name) {
-             document.getElementById("name1").innerHTML = name
-             return "native 调用 webView函数"
+         // 用于给native Swift调用
+         function sayHello() {
+             return "webview中sayHello函数被调用"//返回给native
          }
+        // 用于给native Swift调用 包含参数
+         function sayHello2(valueFromNative) {
+           //可以取得native过来的参数值 写进webView UI
+           document.getElementById("name1").innerHTML = valueFromNative
+           return "webview中sayHello2函数被调用"//返回给native
+         }
+
 
          // 调用native Swift方法
          function responseSwift() {
              // 这里的callbackHandler是创建WKWebViewConfiguration时定义的
-             window.webkit.messageHandlers.hoge.postMessage("webView调用 native")
+             //调用native方面的hoge函数
+             window.webkit.messageHandlers.hoge.postMessage("webView调用 native hoge函数")
          }
       </script>
    </body>
