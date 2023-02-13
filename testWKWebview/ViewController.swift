@@ -67,11 +67,11 @@ extension ViewController: WKNavigationDelegate {
 
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        //看门狗用于接收webView发送的数据message.body
-            if message.name == "hoge" {
+        //看门狗用于接收webView发送的数据message
+            if message.name == "hoge" { //筛选message 名称是 hoge的数据
                 let str = message.body as! String
                 // do something
-                print("native收到webView主动发送的数据", str)
+                print("native收到webView主动发送的message", str)
                 self.showToast(message: str)
             }
         }
