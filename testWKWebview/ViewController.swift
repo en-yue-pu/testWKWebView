@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         userController.add(self, name: "hoge")
         webConfig.userContentController = userController
         webView = WKWebView(frame:  UIScreen.main.bounds, configuration: webConfig)
-        let url = URL(string: "http://169.254.46.230:9999/web5.html")!//这个ip是当前我mac的本地ip
+        let url = URL(string: "http://169.254.179.138:9999/web5.html")!//这个ip是当前我mac的本地ip
         let request = URLRequest(url: url)
         webView.load(request)
 
@@ -29,10 +29,10 @@ class ViewController: UIViewController {
                 
         //5秒后 native发送html代码给webView执行,执行结果能取得所有html数据   取得数据打印
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            self.webView.evaluateJavaScript("document.body.innerHTML") { result , error in
+            self.webView.evaluateJavaScript("document.body.innerHTML") { result , error in
 //                guard let self = self else { return }
-//                guard let html = result as? String, error == nil else { return }
-//                print(html)
+                guard let html = result as? String, error == nil else { return }
+                print(html)//这里包括写在html中的sayHello()函数
 //                let newURL = URL(string: "http://localhost:9999/")!
 //                let newRequest = URLRequest(url: newURL)
 //                self.webView.load(newRequest)
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 //                print("yue webView.stopLoading()执行前", self.webView.isLoading)
 //                self.webView.stopLoading()
 //                print("yue webView.stopLoading()执行后", self.webView.isLoading)
-//            }
+            }
         }
     }
 }
